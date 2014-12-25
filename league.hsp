@@ -1,5 +1,4 @@
 #include "mod_regexp.as"
-#include "hspext.as"
 
 	title "リーグ表生成ツール"
 

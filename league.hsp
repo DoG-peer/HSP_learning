@@ -1,0 +1,104 @@
+#include "mod_regexp.as"
+#include "hspext.as"
+
+	title "リーグ表生成ツール"
+
+	//変数初 期化など
+	sdim hyou,5000
+	sdim user,3000
+	notesel user
+	
+	sdim member,3000,150
+	
+	count = 0
+
+	//罫線
+	keisen1 = "┬─","│itimojime","│nimojime","┼─"
+	keisen2 = "│＿","┼─" 
+
+	keisen3 = "┼───┼────"
+	keisen4 = "│＿－＿│namae"
+
+	shasen = "│／"
+
+	user = "はなこ\nけんた\nみよこ"
+	hyou = {"ここに生成されます
+			50人までは動作確認済み
+
+			このソフトウェアを使用したことによって生じた
+			すべての障害・損害・不具合等に関しては
+			私と私の関係者および私の所属する
+			いかなる団体・組織とも、一切の責任を負いません。
+			各自の責任においてご使用ください。
+
+			ご意見、バグ報告などはTwitterID : @ka_mi_ まで
+			"}
+
+	objmode 2
+	
+	pos 150,0 : mesbox hyou,450,400,5
+	pos 0,0 : mesbox user,150,400,5
+	
+	objsize 150,50 : button gosub "再/生成",*make
+	
+	stop
+
+*make
+	count = 0
+	hyou = ""
+	
+	NINZU = noteinfo(0)
+	
+	repeat NINZU	//4文字以下の場合の横ずれ防止策
+		noteget member(cnt),cnt
+		member(cnt) += "    "	//半角スペースを4文字入れておく
+	loop
+
+	repeat 4	//罫線１
+		repeat NINZU
+			hyou +=  keisen1(count)
+		loop
+		if count = 0 : hyou += "┐"
+		if count = 1 : hyou += "├───┬────" 
+		if count = 2 : hyou += "│勝－負│＝名前＝"
+		if count = 3 : hyou += "┼───┼────"
+		count+= 1
+		hyou += "\n"
+	loop
+
+		shacount = NINZU - 1
+
+	repeat NINZU	//罫線２、３、４
+		count = 0
+		repeat 2
+
+			repeat NINZU
+				if ( count = 0 && cnt = shacount ){
+					hyou += shasen
+					shacount -= 1
+				}else{
+					hyou += keisen2(count)
+				}
+			loop
+
+			if ( count = 1 ) : hyou += keisen3
+			if ( count = 0 ) : hyou += keisen4
+
+			count += 1
+			hyou += "\n"
+		loop
+	loop
+
+	repeat NINZU	//名前設置（置換）
+		hyou = replace( hyou,"namae",member(cnt),1,1,0 )
+
+		val = strmid( member(NINZU - cnt -1 ),0,2 )
+		hyou = replace( hyou,"itimojime",val,1,1,0 )
+		val = strmid( member(NINZU - cnt -1 ),2,2 )
+		hyou = replace( hyou,"nimojime",val,1,1,0 )
+	loop
+	
+
+	objprm 0,hyou
+
+	return

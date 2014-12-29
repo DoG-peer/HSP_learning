@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -32,12 +33,9 @@
       <section>
 		  <h3>
 			  <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-		  <p>
-		  <link rel="import" type="text/html" href="./main.html">
-
-
-		  </p>
-
+		  <textarea id="input" name="" cols="10" rows="15"></textarea>
+		  <!--button id="copy" data-clipboard-target="result">結果をコピー</button-->
+		  <div id="result"></div>
 	<h3>
 		<a id="for-kaami" class="anchor" href="#for-kaami" aria-hidden="true"><span class="octicon octicon-link"></span></a>For かーみ</h3>
 	<p>
@@ -54,5 +52,7 @@ $ git checkout gh-pages
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="./javascripts/main.js"></script>
   </body>
 </html>
